@@ -13,9 +13,11 @@ services:
       - sqlite
 
   sqlite:
-    image: alpine:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ./database:/data
-    command: sh -c "apk --no-cache add sqlite && cp /data/initial-db.sqlite /data/db.sqlite && chmod -R 777 /data/db.sqlite && sqlite3 /data/db.sqlite < /data/init.sql && tail -f /dev/null"
-    container_name: book_sqlite
+        - ./database:/data
+    command: tail -f /dev/null
+    container_name: sqlite
 
